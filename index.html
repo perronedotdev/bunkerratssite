@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bunker Rats — Underground PvPvE Extraction</title>
+    <meta name="description" content="Bunker Rats is a close third-person cooperative PvPvE extraction game set entirely underground. Gear up, descend, compete, extract.">
+    <meta property="og:title" content="Bunker Rats">
+    <meta property="og:description" content="Close third-person cooperative PvPvE extraction. There is no surface. Only the bunker.">
+    <meta property="og:image" content="images/og-image.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bunker Rats">
+    <meta name="twitter:description" content="Close third-person cooperative PvPvE extraction. There is no surface. Only the bunker.">
+    <meta name="twitter:image" content="images/og-image.jpg">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0908;
+            --bg-alt: #0f0d0b;
+            --bg-card: #161310;
+            --amber: #d4a843;
+            --amber-bright: #e8c050;
+            --amber-dim: #a07830;
+            --text: #c8b89a;
+            --text-bright: #e0d4c0;
+            --text-dim: #7a6e5d;
+            --border: #2a2418;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 40%;
+            filter: brightness(0.35);
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 40%, var(--bg) 100%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-logo {
+            width: min(550px, 85vw);
+            height: auto;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 24px rgba(0,0,0,0.7));
+        }
+
+        .tagline {
+            font-size: clamp(0.9rem, 2.2vw, 1.25rem);
+            color: var(--text-dim);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        /* ── Buttons ── */
+        .btn-steam {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: var(--amber);
+            color: var(--bg);
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-steam:hover {
+            background: var(--amber-bright);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(212, 168, 67, 0.25);
+        }
+
+        .btn-steam:active {
+            transform: translateY(0);
+        }
+
+        .btn-steam svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        /* ── Sections ── */
+        section { padding: 5rem 2rem; }
+
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-heading {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            color: var(--amber);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-rule {
+            width: 50px;
+            height: 2px;
+            background: var(--amber-dim);
+            border: none;
+            margin-bottom: 2.5rem;
+        }
+
+        /* ── About ── */
+        .about { background: var(--bg-alt); }
+
+        .about-text {
+            font-size: clamp(1rem, 1.8vw, 1.1rem);
+            line-height: 1.85;
+        }
+
+        .about-text + .about-text { margin-top: 1.25rem; }
+
+        /* ── Features ── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1.75rem 2rem;
+            transition: border-color 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--amber-dim);
+        }
+
+        .feature-card h3 {
+            font-size: 0.95rem;
+            color: var(--text-bright);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card h3::before {
+            content: "// ";
+            color: var(--amber-dim);
+            font-weight: 400;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            line-height: 1.65;
+        }
+
+        /* ── Screenshots ── */
+        .screenshots { background: var(--bg-alt); }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .screenshot-link {
+            display: block;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: border-color 0.2s;
+            line-height: 0;
+        }
+
+        .screenshot-link:hover { border-color: var(--amber-dim); }
+
+        .screenshot-link img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .screenshot-link:hover img { transform: scale(1.03); }
+
+        /* ── Lightbox ── */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.93);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active { display: flex; }
+
+        .lightbox-img {
+            max-width: 92vw;
+            max-height: 88vh;
+            object-fit: contain;
+        }
+
+        .lightbox-btn {
+            position: absolute;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: color 0.2s;
+            font-family: inherit;
+        }
+
+        .lightbox-btn:hover { color: var(--amber); }
+
+        .lightbox-close {
+            top: 1.25rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.5rem;
+            padding: 1rem;
+        }
+
+        .lightbox-prev { left: 0.5rem; }
+        .lightbox-next { right: 0.5rem; }
+
+        /* ── Bottom CTA ── */
+        .cta {
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .cta-heading {
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            color: var(--text-bright);
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-sub {
+            color: var(--text-dim);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        footer a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover { color: var(--amber); }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            section { padding: 3.5rem 1.25rem; }
+            .screenshot-grid { grid-template-columns: 1fr 1fr; gap: 0.35rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .btn-steam { padding: 0.85rem 1.75rem; font-size: 0.95rem; }
+            .lightbox-prev, .lightbox-next { font-size: 1.75rem; }
+        }
+
+        @media (max-width: 400px) {
+            .screenshot-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════ Hero ════════ -->
+<section class="hero">
+    <img class="hero-bg" src="images/hero.jpg" alt="" width="1920" height="620">
+    <div class="hero-content">
+        <img class="hero-logo" src="images/logo.png" alt="Bunker Rats" width="800" height="450">
+        <p class="tagline">Loot. Fight. Extract. Repeat until dead.</p>
+        <a href="#" class="btn-steam" aria-label="Wishlist Bunker Rats on Steam">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.48 2.26a2.93 2.93 0 0 1 1.63-.5h.05l2.44-3.54v-.05A3.93 3.93 0 1 1 15.57 13h-.09l-3.48 2.49a2.95 2.95 0 0 1-2.94 3.15 2.94 2.94 0 0 1-2.8-2.02L2.42 15A10 10 0 1 0 12 2zm-5.33 14.85l-1.17-.49a2.2 2.2 0 0 0 2.13 1.47 2.2 2.2 0 0 0 1.04-4.14l1.21.5a1.62 1.62 0 0 1-1.06 3.02 1.62 1.62 0 0 1-2.15-1.36zm8.83-6.43a2.63 2.63 0 1 0-2.62-2.63 2.63 2.63 0 0 0 2.62 2.63zm0-4.3a1.67 1.67 0 1 1 0 3.35 1.67 1.67 0 0 1 0-3.35z"/></svg>
+            Wishlist on Steam
+        </a>
+    </div>
+</section>
+
+<!-- ════════ About ════════ -->
+<section class="about">
+    <div class="section-inner">
+        <h2 class="section-heading">About the Game</h2>
+        <hr class="section-rule">
+        <p class="about-text">
+            <strong>Bunker Rats</strong> is a co-op PvPvE extraction game set entirely underground. There is no surface. Maybe there was one once. Doesn't matter. You live in a bunker now.
+        </p>
+        <p class="about-text">
+            You and your team share a home bunker with a crafting bench, an armory locker, and the kind of ambiance that says "nobody has seen the sun in a very long time." From there, you deploy into shared bunker complexes where up to three teams are all trying to grab the same loot. Think of it as competitive dumpster diving, except the dumpster is a concrete labyrinth and everyone is armed.
+        </p>
+        <p class="about-text">
+            There are no guns. Combat is melee only. Sledgehammers, machetes, crowbars, a sickle, a stale baguette. Whatever you can find or craft. Every fight happens at arm's length in a hallway where both of you can hear the other one breathing. Nothing says "I want your loot" like sprinting around a corner with a fish skewer. It's horrible. You'll love it.
+        </p>
+        <p class="about-text">
+            The bunkers themselves are also trying to kill you. Gas leaks fill corridors with green fog. Busted electrical panels arc across doorways. The longer your team sticks around looting, the more the complex falls apart. At some point you have to ask yourself if that third piece of scrap metal is really worth it. It's not. You're going to grab it anyway.
+        </p>
+        <p class="about-text">
+            If you die, everything you're carrying drops on the floor for someone else to take. Your money survives because apparently it's in a pocket nobody can reach. Small victories.
+        </p>
+    </div>
+</section>
+
+<!-- ════════ Features ════════ -->
+<section class="features">
+    <div class="section-inner">
+        <h2 class="section-heading">Features</h2>
+        <hr class="section-rule">
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Extraction Loop</h3>
+                <p>Get in, loot everything that isn't bolted down, get out. Die and your stuff becomes someone else's stuff.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Melee Only</h3>
+                <p>No guns. Just you and whatever blunt, sharp, or bread-based object you brought from home.</p>
+            </div>
+            <div class="feature-card">
+                <h3>3-Team PvPvE</h3>
+                <p>Two other teams want exactly what you want. The bunker itself also has opinions about your survival.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Crafting &amp; Progression</h3>
+                <p>Turn junk into slightly better junk. Level up. Unlock recipes. Tape nails to a baseball bat and call it an upgrade.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Escalating Hazards</h3>
+                <p>Gas and electrical faults get worse the longer you stay. The game is politely asking you to leave. Then impolitely.</p>
+            </div>
+            <div class="feature-card">
+                <h3>No Sky, No Sun, No Hope</h3>
+                <p>Every fight, every loot run, every panic sprint happens underground in tight corridors and cramped rooms. Claustrophobia sold separately.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════ Screenshots ════════ -->
+<section class="screenshots">
+    <div class="section-inner">
+        <h2 class="section-heading">Screenshots</h2>
+        <hr class="section-rule">
+        <div class="screenshot-grid">
+            <a class="screenshot-link" data-index="0"><img src="images/screenshots/02-thumb.jpg" alt="Corridor exploration" width="640" height="360" loading="lazy"></a>
+            <a class="screenshot-link" data-index="1"><img src="images/screenshots/03-thumb.jpg" alt="Dark storage room" width="640" height="360" loading="lazy"></a>
+            <a class="screenshot-link" data-index="2"><img src="images/screenshots/04-thumb.jpg" alt="Stats board and equipment" width="640" height="360" loading="lazy"></a>
+            <a class="screenshot-link" data-index="3"><img src="images/screenshots/05-thumb.jpg" alt="Player with crowbar" width="640" height="360" loading="lazy"></a>
+            <a class="screenshot-link" data-index="4"><img src="images/screenshots/06-thumb.jpg" alt="Bunker environment" width="640" height="360" loading="lazy"></a>
+            <a class="screenshot-link" data-index="5"><img src="images/screenshots/07-thumb.jpg" alt="Complex corridor with pipes" width="640" height="360" loading="lazy"></a>
+        </div>
+    </div>
+</section>
+
+<!-- ════════ Bottom CTA ════════ -->
+<section class="cta">
+    <p class="cta-heading">Ready to descend?</p>
+    <p class="cta-sub">Add Bunker Rats to your wishlist and be the first to know when we go live.</p>
+    <a href="#" class="btn-steam" aria-label="Wishlist Bunker Rats on Steam">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.48 2.26a2.93 2.93 0 0 1 1.63-.5h.05l2.44-3.54v-.05A3.93 3.93 0 1 1 15.57 13h-.09l-3.48 2.49a2.95 2.95 0 0 1-2.94 3.15 2.94 2.94 0 0 1-2.8-2.02L2.42 15A10 10 0 1 0 12 2zm-5.33 14.85l-1.17-.49a2.2 2.2 0 0 0 2.13 1.47 2.2 2.2 0 0 0 1.04-4.14l1.21.5a1.62 1.62 0 0 1-1.06 3.02 1.62 1.62 0 0 1-2.15-1.36zm8.83-6.43a2.63 2.63 0 1 0-2.62-2.63 2.63 2.63 0 0 0 2.62 2.63zm0-4.3a1.67 1.67 0 1 1 0 3.35 1.67 1.67 0 0 1 0-3.35z"/></svg>
+        Wishlist on Steam
+    </a>
+</section>
+
+<!-- ════════ Footer ════════ -->
+<footer>
+    <p>&copy; 2026 Bunker Rats. All rights reserved.</p>
+</footer>
+
+<!-- ════════ Lightbox ════════ -->
+<div class="lightbox" id="lightbox">
+    <button class="lightbox-btn lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-btn lightbox-prev" aria-label="Previous">&#8249;</button>
+    <button class="lightbox-btn lightbox-next" aria-label="Next">&#8250;</button>
+    <img class="lightbox-img" src="" alt="Screenshot">
+</div>
+
+<script>
+(function() {
+    var screenshots = [
+        "images/screenshots/02.jpg",
+        "images/screenshots/03.jpg",
+        "images/screenshots/04.jpg",
+        "images/screenshots/05.jpg",
+        "images/screenshots/06.jpg",
+        "images/screenshots/07.jpg"
+    ];
+    var lightbox = document.getElementById("lightbox");
+    var lbImg = lightbox.querySelector(".lightbox-img");
+    var current = 0;
+
+    document.querySelectorAll(".screenshot-link").forEach(function(link) {
+        link.addEventListener("click", function(e) {
+            e.preventDefault();
+            current = parseInt(this.dataset.index);
+            show(current);
+        });
+    });
+
+    function show(i) {
+        current = (i + screenshots.length) % screenshots.length;
+        lbImg.src = screenshots[current];
+        lightbox.classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+
+    lightbox.querySelector(".lightbox-close").addEventListener("click", close);
+    lightbox.querySelector(".lightbox-prev").addEventListener("click", function(e) { e.stopPropagation(); show(current - 1); });
+    lightbox.querySelector(".lightbox-next").addEventListener("click", function(e) { e.stopPropagation(); show(current + 1); });
+    lightbox.addEventListener("click", function(e) { if (e.target === lightbox) close(); });
+
+    document.addEventListener("keydown", function(e) {
+        if (!lightbox.classList.contains("active")) return;
+        if (e.key === "Escape") close();
+        if (e.key === "ArrowLeft") show(current - 1);
+        if (e.key === "ArrowRight") show(current + 1);
+    });
+
+    function close() {
+        lightbox.classList.remove("active");
+        document.body.style.overflow = "";
+    }
+})();
+</script>
+</body>
+</html>
