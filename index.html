@@ -130,6 +130,47 @@
             flex-shrink: 0;
         }
 
+        .btn-bluesky {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: var(--amber);
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            border: 2px solid var(--amber);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s, color 0.2s;
+        }
+
+        .btn-bluesky:hover {
+            background: var(--amber);
+            color: var(--bg);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(212, 168, 67, 0.25);
+        }
+
+        .btn-bluesky:active {
+            transform: translateY(0);
+        }
+
+        .btn-bluesky svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         /* ── Sections ── */
         section { padding: 5rem 2rem; }
 
@@ -321,7 +362,7 @@
             section { padding: 3.5rem 1.25rem; }
             .screenshot-grid { grid-template-columns: 1fr 1fr; gap: 0.35rem; }
             .features-grid { grid-template-columns: 1fr; }
-            .btn-steam { padding: 0.85rem 1.75rem; font-size: 0.95rem; }
+            .btn-steam, .btn-bluesky { padding: 0.85rem 1.75rem; font-size: 0.95rem; }
             .lightbox-prev, .lightbox-next { font-size: 1.75rem; }
         }
 
@@ -338,10 +379,16 @@
     <div class="hero-content">
         <img class="hero-logo" src="images/logo.png" alt="Bunker Rats" width="800" height="450">
         <p class="tagline">Loot. Fight. Extract. Repeat until dead.</p>
-        <a href="#" class="btn-steam" aria-label="Wishlist Bunker Rats on Steam">
-            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.48 2.26a2.93 2.93 0 0 1 1.63-.5h.05l2.44-3.54v-.05A3.93 3.93 0 1 1 15.57 13h-.09l-3.48 2.49a2.95 2.95 0 0 1-2.94 3.15 2.94 2.94 0 0 1-2.8-2.02L2.42 15A10 10 0 1 0 12 2zm-5.33 14.85l-1.17-.49a2.2 2.2 0 0 0 2.13 1.47 2.2 2.2 0 0 0 1.04-4.14l1.21.5a1.62 1.62 0 0 1-1.06 3.02 1.62 1.62 0 0 1-2.15-1.36zm8.83-6.43a2.63 2.63 0 1 0-2.62-2.63 2.63 2.63 0 0 0 2.62 2.63zm0-4.3a1.67 1.67 0 1 1 0 3.35 1.67 1.67 0 0 1 0-3.35z"/></svg>
-            Wishlist on Steam
-        </a>
+        <div class="btn-group">
+            <a href="#" class="btn-steam" aria-label="Wishlist Bunker Rats on Steam">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.48 2.26a2.93 2.93 0 0 1 1.63-.5h.05l2.44-3.54v-.05A3.93 3.93 0 1 1 15.57 13h-.09l-3.48 2.49a2.95 2.95 0 0 1-2.94 3.15 2.94 2.94 0 0 1-2.8-2.02L2.42 15A10 10 0 1 0 12 2zm-5.33 14.85l-1.17-.49a2.2 2.2 0 0 0 2.13 1.47 2.2 2.2 0 0 0 1.04-4.14l1.21.5a1.62 1.62 0 0 1-1.06 3.02 1.62 1.62 0 0 1-2.15-1.36zm8.83-6.43a2.63 2.63 0 1 0-2.62-2.63 2.63 2.63 0 0 0 2.62 2.63zm0-4.3a1.67 1.67 0 1 1 0 3.35 1.67 1.67 0 0 1 0-3.35z"/></svg>
+                Wishlist on Steam
+            </a>
+            <a href="https://bsky.app/profile/bunkerrats.com" target="_blank" rel="noopener noreferrer" class="btn-bluesky" aria-label="Follow Bunker Rats on Bluesky">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.785 2.627 3.6 3.476 6.178 3.226-4.388.426-8.252 2.208-2.87 7.757 6.15 5.028 7.389-2.958 8.068-5.37.68 2.412 1.387 10.116 7.93 5.37 5.37-5.549 1.641-7.33-2.747-7.757 2.578.25 5.393-.6 6.178-3.226C23.622 9.418 24 4.458 24 3.768c0-.69-.139-1.861-.902-2.203-.659-.3-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+                Bluesky
+            </a>
+        </div>
     </div>
 </section>
 
@@ -422,10 +469,16 @@
 <section class="cta">
     <p class="cta-heading">Ready to descend?</p>
     <p class="cta-sub">Add Bunker Rats to your wishlist and be the first to know when we go live.</p>
-    <a href="#" class="btn-steam" aria-label="Wishlist Bunker Rats on Steam">
-        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.48 2.26a2.93 2.93 0 0 1 1.63-.5h.05l2.44-3.54v-.05A3.93 3.93 0 1 1 15.57 13h-.09l-3.48 2.49a2.95 2.95 0 0 1-2.94 3.15 2.94 2.94 0 0 1-2.8-2.02L2.42 15A10 10 0 1 0 12 2zm-5.33 14.85l-1.17-.49a2.2 2.2 0 0 0 2.13 1.47 2.2 2.2 0 0 0 1.04-4.14l1.21.5a1.62 1.62 0 0 1-1.06 3.02 1.62 1.62 0 0 1-2.15-1.36zm8.83-6.43a2.63 2.63 0 1 0-2.62-2.63 2.63 2.63 0 0 0 2.62 2.63zm0-4.3a1.67 1.67 0 1 1 0 3.35 1.67 1.67 0 0 1 0-3.35z"/></svg>
-        Wishlist on Steam
-    </a>
+    <div class="btn-group">
+        <a href="#" class="btn-steam" aria-label="Wishlist Bunker Rats on Steam">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 0 0-9.96 9.04l5.48 2.26a2.93 2.93 0 0 1 1.63-.5h.05l2.44-3.54v-.05A3.93 3.93 0 1 1 15.57 13h-.09l-3.48 2.49a2.95 2.95 0 0 1-2.94 3.15 2.94 2.94 0 0 1-2.8-2.02L2.42 15A10 10 0 1 0 12 2zm-5.33 14.85l-1.17-.49a2.2 2.2 0 0 0 2.13 1.47 2.2 2.2 0 0 0 1.04-4.14l1.21.5a1.62 1.62 0 0 1-1.06 3.02 1.62 1.62 0 0 1-2.15-1.36zm8.83-6.43a2.63 2.63 0 1 0-2.62-2.63 2.63 2.63 0 0 0 2.62 2.63zm0-4.3a1.67 1.67 0 1 1 0 3.35 1.67 1.67 0 0 1 0-3.35z"/></svg>
+            Wishlist on Steam
+        </a>
+        <a href="https://bsky.app/profile/bunkerrats.com" target="_blank" rel="noopener noreferrer" class="btn-bluesky" aria-label="Follow Bunker Rats on Bluesky">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.785 2.627 3.6 3.476 6.178 3.226-4.388.426-8.252 2.208-2.87 7.757 6.15 5.028 7.389-2.958 8.068-5.37.68 2.412 1.387 10.116 7.93 5.37 5.37-5.549 1.641-7.33-2.747-7.757 2.578.25 5.393-.6 6.178-3.226C23.622 9.418 24 4.458 24 3.768c0-.69-.139-1.861-.902-2.203-.659-.3-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+            Bluesky
+        </a>
+    </div>
 </section>
 
 <!-- ════════ Footer ════════ -->
